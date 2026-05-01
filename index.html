@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apple.store — iPhone 15 Pro</title>
+  <style>
+    /* ---------- RESET ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+    .brand span { color: #888; font-weight: 400; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 14px;
+      color: #d1d1d1;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .mobile-menu {
+      display: none;
+      background: rgba(0,0,0,0.95);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 24px;
+    }
+    .mobile-menu a {
+      display: block;
+      padding: 14px 0;
+      font-size: 14px;
+      color: #e0e0e0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu.open { display: block; }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s;
+      border: 1px solid transparent;
+      margin: 6px;
+    }
+    .btn-primary-light { background: #fff; color: #000; }
+    .btn-primary-light:hover { background: #e0e0e0; }
+    .btn-ghost-light { background: transparent; color: #fff; border-color: rgba(255,255,255,0.6); }
+    .btn-ghost-light:hover { background: #fff; color: #000; }
+    .btn-primary-dark { background: #000; color: #fff; }
+    .btn-primary-dark:hover { background: #333; }
+    .btn-ghost-dark { background: transparent; color: #000; border-color: rgba(0,0,0,0.6); }
+    .btn-ghost-dark:hover { background: #000; color: #fff; }
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px 40px;
+      text-align: center;
+    }
+    .section-light { background: #f5f5f7; color: #000; }
+    .section-white { background: #fff; color: #000; }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #9a9a9a;
+      margin-bottom: 14px;
+    }
+    .eyebrow-rose { color: #e11d48; }
+
+    h1, h2 {
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .tagline {
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 300;
+      margin-top: 14px;
+      color: #d1d1d1;
+    }
+    .section-light .tagline, .section-white .tagline { color: #444; }
+
+    .cta-group { margin-top: 28px; }
+
+    .hero-img {
+      margin-top: 48px;
+      width: 100%;
+      max-width: 1000px;
+      padding: 0 12px;
+    }
+
+    /* dual image grid */
+    .image-grid {
+      margin-top: 56px;
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 0 12px;
+    }
+    .image-grid img {
+      border-radius: 20px;
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+    }
+
+    /* ---------- FOOTER / CONTACT ---------- */
+    .contact {
+      background: #000;
+      color: #fff;
+      padding: 80px 20px 40px;
+      text-align: center;
+    }
+    .contact h2 { color: #fff; }
+    .contact p { color: #aaa; margin-top: 10px; }
+
+    .contact-grid {
+      margin: 48px auto 0;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .contact-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 28px 18px;
+      transition: background 0.25s, transform 0.25s;
+      display: block;
+    }
+    .contact-card:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 18px;
+    }
+    .contact-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #888;
+    }
+    .contact-value {
+      font-size: 14px;
+      margin-top: 6px;
+      word-break: break-word;
+    }
+
+    .copy {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+      .image-grid { grid-template-columns: 1fr; }
+      .image-grid img { height: 260px; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <nav class="nav-container">
+      <a href="#home" class="brand">Apple<span>.store</span></a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#pro">iPhone 15 Pro</a></li>
+        <li><a href="#iphone15">iPhone 15</a></li>
+        <li><a href="#valentines">Valentine's</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">&#9776;</button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home" onclick="toggleMenu()">Home</a>
+      <a href="#pro" onclick="toggleMenu()">iPhone 15 Pro</a>
+      <a href="#iphone15" onclick="toggleMenu()">iPhone 15</a>
+      <a href="#valentines" onclick="toggleMenu()">Valentine's</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+  </header>
+
+  <!-- SECTION 1: iPhone 15 Pro -->
+  <section id="home">
+    <div id="pro"></div>
+    <p class="eyebrow">New</p>
+    <h1>iPhone 15 Pro</h1>
+    <p class="tagline">Titanium. So strong. So light. So Pro.</p>
+    <div class="cta-group">
+      <a href="#" class="btn btn-primary-light">Know more &rsaquo;</a>
+      <a href="#" class="btn btn-ghost-light">Buy</a>
+    </div>
+    <img class="hero-img"
+         src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=1600&q=80"
+         alt="iPhone 15 Pro" />
+  </section>
+
+  <!-- SECTION 2: iPhone 15 -->
+  <section id="iphone15" class="section-light">
+    <p class="eyebrow">iPhone</p>
+    <h2>iPhone 15</h2>
+    <p class="tagline">New camera. New design. New excitement.</p>
+    <div class="cta-group">
+      <a href="#" class="btn btn-primary-dark">Know more &rsaquo;</a>
+      <a href="#" class="btn btn-ghost-dark">Buy</a>
+    </div>
+    <div class="image-grid">
+      <img src="https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=1000&q=80" alt="iPhone 15 design" />
+      <img src="https://images.unsplash.com/photo-1592286927505-1def25115558?w=1000&q=80" alt="iPhone 15 camera" />
+    </div>
+  </section>
+
+  <!-- SECTION 3: Valentine's -->
+  <section id="valentines" class="section-white">
+    <p class="eyebrow eyebrow-rose">Limited time</p>
+    <h2>Dia dos Namorados</h2>
+    <p class="tagline">Last chance to buy gifts...</p>
+    <div class="cta-group">
+      <a href="#" class="btn btn-primary-dark">Know more &rsaquo;</a>
+    </div>
+    <div class="image-grid">
+      <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000&q=80" alt="Gift idea" />
+      <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=1000&q=80" alt="Apple TV" />
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <footer id="contact" class="contact">
+    <p class="eyebrow">Get in touch</p>
+    <h2>Contact</h2>
+    <p>Have a question? Drop me a line — I'll get back to you.</p>
+
+    <div class="contact-grid">
+      <a href="mailto:imanserlune@gmail.com" class="contact-card">
+        <div class="contact-icon">&#9993;</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">imanserlune@gmail.com</div>
+      </a>
+      <a href="tel:+923214034506" class="contact-card">
+        <div class="contact-icon">&#128222;</div>
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">0321 4034506</div>
+      </a>
+      <a href="https://instagram.com/iman_serelune" target="_blank" rel="noopener" class="contact-card">
+        <div class="contact-icon">&#64;</div>
+        <div class="contact-label">Instagram</div>
+        <div class="contact-value">@iman_serelune</div>
+      </a>
+    </div>
+
+    <p class="copy">&copy; 2026 Apple.store — Demo site. All product names &amp; images belong to their respective owners.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
+💡 
